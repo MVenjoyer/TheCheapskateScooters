@@ -1,0 +1,26 @@
+@startuml
+title Отмена аренды самоката — Sequence Diagram
+
+actor Пользователь
+participant "Frontend" as FE
+participant "Backend (Сервис аренды)" as BE
+database "База данных" as DB
+
+Пользователь -> FE : Выбрать самокат
+Пользователь -> FE : Нажать «Отменить аренду»
+
+FE -> BE : DELETE /rent/{rentId}
+
+BE -> DB : Запрос в БД (получить аренду)
+DB --> BE : Данные аренды
+
+BE -> DB : Удаление аренды
+DB --> BE : OK
+
+BE -> DB : Обновление статуса самоката
+DB --> BE : OK
+
+BE --> FE : 200 OK (аренда отменена)
+FE --> Пользователь : Успех
+
+@enduml

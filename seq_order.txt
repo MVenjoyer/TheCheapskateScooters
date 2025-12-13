@@ -1,0 +1,34 @@
+@startuml
+title Аренда самоката — Sequence Diagram (Frontend + Backend)
+
+actor Пользователь
+participant "Frontend" as FE
+participant "Backend (Сервис аренды)" as BE
+database "База данных" as DB
+
+Пользователь -> FE : Выбрать самокат
+Пользователь -> FE : Нажать «Заказать»
+
+FE -> BE : POST /rent (id самоката)
+
+BE -> BE : Проверить доступность
+BE -> DB : Запрос в БД (статус самоката)
+DB --> BE : Данные о доступности
+
+alt Самокат доступен
+    BE -> BE : Создать аренду
+    BE -> DB : Сохранить данные аренды
+    DB --> BE : OK
+
+    BE -> DB : Обновить данные самоката
+    DB --> BE : OK
+
+    BE --> FE : 200 OK (аренда создана)
+    FE --> Пользователь : Успех
+else Самокат недоступен
+    BE -> BE : Сформировать ошибку
+    BE --> FE : 409 Conflict
+    FE --> Пользователь : Ошибка
+end
+
+@enduml
