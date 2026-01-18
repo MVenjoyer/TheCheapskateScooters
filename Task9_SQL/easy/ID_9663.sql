@@ -1,0 +1,1 @@
+SELECT company, continent FROM forbes_global_2010_2014 WHERE RANK = 1;

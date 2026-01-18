@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Карта самокатов</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+        }
+
+        #map {
+            flex: 3;
+            height: 100%;
+        }
+
+        .sidebar {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            overflow-y: auto;
+            border-left: 1px solid #ddd;
+            width: 400px;
+        }
+
+        .point-card {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 2px solid #e9ecef;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .point-card.active {
+            border-color: #4c6ef5;
+            background: #f0f7ff;
+            box-shadow: 0 4px 12px rgba(76, 110, 245, 0.15);
+        }
+
+        .point-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: #4c6ef5;
+        }
+
+        .point-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .point-name {
+            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .point-address {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .point-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .scooter-count {
+            background: #e9ecef;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .available-count {
+            background: #d1fae5;
+            color: #065f46;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .point-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-go-to-point {
+            flex: 1;
+            padding: 8px 12px;
+            background: #4c6ef5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-go-to-point:hover {
+            background: #3b5bdb;
+        }
+
+        .btn-select {
+            flex: 1;
+            padding: 8px 12px;
+            background: #f1f5f9;
+            color: #4c6ef5;
+            border: 1px solid #c5d3e8;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-select:hover {
+            background: #e9f0ff;
+            border-color: #4c6ef5;
+        }
+
+        .empty-points {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-style: italic;
+        }
+
+        .balloon-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 6px;
+        }
+
+        .balloon-stat {
+            text-align: center;
+        }
+
+        .balloon-stat-value {
+            font-size: 16px;
+            font-weight: bold;
+            color: #4c6ef5;
+        }
+
+        .balloon-stat-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .balloon-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .balloon-btn {
+            flex: 1;
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .balloon-btn-primary {
+            background: #4c6ef5;
+            color: white;
+        }
+
+        .balloon-btn-primary:hover {
+            background: #3b5bdb;
+        }
+
+        .balloon-btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+
+        .balloon-btn-secondary:hover {
+            background: #e9ecef;
+        }
+
+        .selected-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 8px;
+            height: 8px;
+            background: #4c6ef5;
+            border-radius: 50%;
+        }
+        header {
+            background: #4c6ef5;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header a {
+            background: white;
+            color: #4c6ef5;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Карта самокатов TheCheapskateScooters</h1>
+    <p>Выберите точку для просмотра самокатов</p>
+    <a  href="/">← Назад</a>
+</header>
+
+    <div class="container">
+        <div id="map"></div>
+
+        <div class="sidebar" id="sidebar">
+            <h3 style="margin-bottom: 20px;">Точки с самокатами ({{ points|length }})</h3>
+
+            {% for point in points %}
+            <div class="point-card" id="point-card-{{ point.id }}"
+                 data-id="{{ point.id }}"
+                 onclick="focusOnPoint({{ point.id }})">
+
+                <div class="point-header">
+                    <div style="flex: 1;">
+                        <div class="point-name">📍 {{ point.name }}</div>
+                        <div class="point-address" id="address-{{ point.id }}">
+                            Загрузка адреса...
+                        </div>
+                    </div>
+                    <div class="selected-indicator" style="display: none;"></div>
+                </div>
+
+                <div class="point-info">
+                    <div class="scooter-count">
+                        🛴 Всего: <strong>{{ point.scooters.count }}</strong>
+                    </div>
+                    <div class="available-count">
+                        ✅ Доступно: <strong id="available-{{ point.id }}">
+                            {{ point.available_scooters|default:0 }}
+                        </strong>
+                    </div>
+                </div>
+
+                <div class="point-actions">
+                    <button class="btn-go-to-point"
+                            onclick="event.stopPropagation(); window.location.href='{% url 'point_detail' point.id %}'">
+                        📋 Подробнее
+                    </button>
+                    <button class="btn-select"
+                            onclick="event.stopPropagation(); focusOnPoint({{ point.id }})">
+                        🗺️ На карте
+                    </button>
+                </div>
+            </div>
+            {% empty %}
+            <div class="empty-points">
+                <p>Точек с самокатами пока нет</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <script src="https://api-maps.yandex.ru/2.1/?apikey={{ yandex_api_key }}&lang=ru_RU"></script>
+
+    <script>
+        let myMap;
+        let points = JSON.parse('{{ points_json|escapejs }}');
+        let scooters = JSON.parse('{{ scooters_json|escapejs }}');
+        let placemarks = {};
+        let selectedPointId = null;
+        let geocoder;
+
+        function getAddress(pointId, latitude, longitude) {
+            if (!geocoder) {
+                geocoder = ymaps.geocode([latitude, longitude]);
+            } else {
+                geocoder = ymaps.geocode([latitude, longitude]);
+            }
+
+            geocoder.then(function(res) {
+                const firstGeoObject = res.geoObjects.get(0);
+                let address = 'Адрес не найден';
+
+                if (firstGeoObject) {
+                    address = firstGeoObject.getAddressLine();
+                    if (address.length > 50) {
+                        address = address.substring(0, 47) + '...';
+                    }
+                }
+
+                const addressElement = document.getElementById('address-' + pointId);
+                if (addressElement) {
+                    addressElement.textContent = address;
+                }
+            }).catch(function(error) {
+                console.error('Ошибка геокодирования:', error);
+                document.getElementById('address-' + pointId).textContent = 'Адрес не доступен';
+            });
+        }
+
+        ymaps.ready(init);
+
+        function init() {
+            myMap = new ymaps.Map("map", {
+                center: [55.7558, 37.6176],
+                zoom: 1,
+                controls: ['zoomControl', 'fullscreenControl']
+            });
+
+            points.forEach(function(point) {
+                addPointToMap(point);
+                getAddress(point.id, point.latitude, point.longitude);
+            });
+
+            if (points.length > 0) {
+                myMap.setBounds(myMap.geoObjects.getBounds());
+            }
+
+            myMap.events.add('click', function() {
+                if (selectedPointId) {
+                    deselectPoint(selectedPointId);
+                }
+            });
+        }
+
+        function addPointToMap(point) {
+            const pointScooters = scooters.filter(s => s.point_id === point.id);
+            const availableScooters = pointScooters.filter(s => s.is_available);
+
+            let iconColor = 'red';
+            if (availableScooters.length > 0) {
+                iconColor = availableScooters.length >= 3 ? 'green' : 'blue';
+            }
+
+            const balloonContent = `
+                <div class="balloon-stats">
+                    <div class="balloon-stat">
+                        <div class="balloon-stat-value">${pointScooters.length}</div>
+                        <div class="balloon-stat-label">Всего</div>
+                    </div>
+                    <div class="balloon-stat">
+                        <div class="balloon-stat-value" style="color: ${availableScooters.length > 0 ? '#28a745' : '#dc3545'}">
+                            ${availableScooters.length}
+                        </div>
+                        <div class="balloon-stat-label">Доступно</div>
+                    </div>
+                </div>
+
+                <div class="balloon-actions">
+                     <button class="balloon-btn balloon-btn-primary"
+                        onclick="window.location.href='/points/${point.id}/'">
+                        📋 Перейти к точке
+                    </button>
+                    <button class="balloon-btn balloon-btn-secondary"
+                            onclick="selectPointFromBalloon(${point.id})">
+                        🗺️ Выбрать
+                    </button>
+                </div>
+            `;
+
+            const placemark = new ymaps.Placemark(
+                [point.latitude, point.longitude],
+                {
+                    balloonContentHeader: point.name,
+                    balloonContentBody: balloonContent,
+                    iconCaption: `${point.name} (${availableScooters.length}/${pointScooters.length})`
+                },
+                {
+                    preset: `islands#${iconColor}CircleIcon`,
+                    balloonCloseButton: true,
+                    balloonMaxWidth: 400,
+                    hideIconOnBalloonOpen: false
+                }
+            );
+
+            placemarks[point.id] = placemark;
+
+            myMap.geoObjects.add(placemark);
+
+            placemark.events.add('click', function(e) {
+                e.stopPropagation();
+                focusOnPoint(point.id);
+            });
+        }
+
+        function selectPoint(pointId) {
+            if (selectedPointId && selectedPointId !== pointId) {
+                deselectPoint(selectedPointId);
+            }
+
+            const point = points.find(p => p.id === pointId);
+            if (!point) return;
+
+            if (placemarks[pointId]) {
+                placemarks[pointId].balloon.open();
+                myMap.setCenter([point.latitude, point.longitude], 16);
+            }
+
+            const card = document.getElementById('point-card-' + pointId);
+            if (card) {
+                card.classList.add('active');
+                card.querySelector('.selected-indicator').style.display = 'block';
+                card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+
+            selectedPointId = pointId;
+        }
+
+        function selectPointFromBalloon(pointId) {
+            selectPoint(pointId);
+        }
+
+        function deselectPoint(pointId) {
+            if (placemarks[pointId]) {
+                placemarks[pointId].balloon.close();
+            }
+
+            const card = document.getElementById('point-card-' + pointId);
+            if (card) {
+                card.classList.remove('active');
+                card.querySelector('.selected-indicator').style.display = 'none';
+            }
+
+            if (selectedPointId === pointId) {
+                selectedPointId = null;
+            }
+        }
+
+        function focusOnPoint(pointId) {
+            const point = points.find(p => p.id === pointId);
+            if (point && placemarks[pointId]) {
+                myMap.setCenter([point.latitude, point.longitude], 16);
+                placemarks[pointId].balloon.open();
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            points.forEach(point => {
+                getAddress(point.id, point.latitude, point.longitude);
+            });
+        });
+    </script>
+</body>
+</html>
