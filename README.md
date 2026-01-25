@@ -9,7 +9,7 @@
 
 ## Лабораторная работа 3: Схема бд
 - [схема](./sql/dbdiagram.io.png)
-- [создание](./sql/01_create_databse.sql)
+- [создание](./sql/01_create_database.sql)
 - [создание таблиц](./sql/02_create_tables.sql)
 
 ## Лабораторная работа 4: Диаграммы
