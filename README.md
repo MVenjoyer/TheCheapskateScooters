@@ -4,7 +4,8 @@
 [ТЗ на систему TheCheapskateScooters](./TZ.md)
 
 ## Лабораторная работа 2: Прототип UI
-[Прототип интерфейса](./web.png)
+[Прототип интерфейса(предполагаемый)](./web.png)
+[Прототип интерфейса(real)](./web_real.drawio.png)
 
 ## Лабораторная работа 3: Схема бд
 - [схема](./sql/dbdiagram.io.png)
@@ -22,6 +23,7 @@
 - [docs](./doc.pdf)
 ## Лабораторная работа 8: Postman
 - [postman](./postman)
+- [invitation link](https://app.getpostman.com/join-team?invite_code=cfb09e72ac3611acdf94181bd0c83d958dc414b07ebe8b9ffae9747c4fd34994&target_code=8cd3d1ec4e1a98e5c63bddb8fadfdbc6)
 
 ## Лабораторная работа 9: Sql задачки
 - [sql](./Task9_SQL)
