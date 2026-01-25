@@ -60,21 +60,15 @@ def map_view(request):
 
 
 def point_detail(request, point_id):
-    """Детальная страница точки с самокатами"""
-
-    # Получаем точку с предзагрузкой самокатов
     point = get_object_or_404(
         ScooterPoint.objects.prefetch_related('scooters'),
         id=point_id
     )
 
-    # Получаем все самокаты на точке
     all_scooters = point.scooters.all()
 
-    # Доступные самокаты
     available_scooters = all_scooters.filter(is_available=True)
 
-    # Фильтры из GET-параметров
     battery_min = request.GET.get('battery_min', 0)
     rating_min = request.GET.get('rating_min', 0)
 
@@ -102,14 +96,12 @@ def rentals_view(request):
     user = request.user
 
 
-    # Текущие аренды (еще не завершены)
     active_rentals = Rental.objects.filter(
         user=user,
         end_time__isnull=True
     ).select_related('scooter')
 
 
-    # История аренд (уже завершены)
     past_rentals = Rental.objects.filter(
         user=user,
         end_time__isnull=False

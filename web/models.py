@@ -23,10 +23,9 @@ class Scooter(models.Model):
     battery_level = models.IntegerField(default=100, verbose_name="Уровень батареи")
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # Внешний ключ на точку вместо ManyToMany
     point = models.ForeignKey(
         ScooterPoint,
-        on_delete=models.SET_NULL,  # или CASCADE если нужно удалять
+        on_delete=models.SET_NULL,
         null=True,
         blank=True,
         related_name='scooters',

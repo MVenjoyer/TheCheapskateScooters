@@ -1,0 +1,945 @@
+{
+  "info": {
+    "_postman_id": "b36e2053-f94f-4b21-809d-71f29e49ca1b",
+    "name": "TheCheapskateScooters API",
+    "description": "StartFragmentAPI тесты для системы аренды самокатовEndFragment",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "51671943",
+    "_collection_link": "https://go.postman.co/collection/51671943-b36e2053-f94f-4b21-809d-71f29e49ca1b?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "GET Home",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time < 1000ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Content-Type is text/html\", function () {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\"))\r",
+              "        .to.include(\"text/html\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "const html = pm.response.text();\r",
+              "pm.expect(html).to.be.a(\"string\");\r",
+              "\r",
+              "\r",
+              "pm.test(\"HTML doctype exists\", function () {\r",
+              "    pm.expect(html).to.include(\"<!DOCTYPE html>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"HTML lang is ru\", function () {\r",
+              "    pm.expect(html).to.include('<html lang=\"ru\">');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Head and Body exist\", function () {\r",
+              "    pm.expect(html).to.include(\"<head>\");\r",
+              "    pm.expect(html).to.include(\"<body>\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Meta charset UTF-8 exists\", function () {\r",
+              "    pm.expect(html).to.include('<meta charset=\"UTF-8\">');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Viewport meta exists\", function () {\r",
+              "    pm.expect(html).to.include('name=\"viewport\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Title is correct\", function () {\r",
+              "    pm.expect(html).to.include(\"<title>TheCheapskateScooters</title>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Style tag exists\", function () {\r",
+              "    pm.expect(html).to.include(\"<style>\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Container exists\", function () {\r",
+              "    pm.expect(html).to.include('class=\"container\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Card exists\", function () {\r",
+              "    pm.expect(html).to.include('class=\"card\"');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Logo block exists\", function () {\r",
+              "    pm.expect(html).to.include('class=\"logo\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Scooter emoji exists\", function () {\r",
+              "    pm.expect(html).to.include(\"🛴\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Welcome header exists\", function () {\r",
+              "    pm.expect(html).to.include('class=\"welcome\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Username span exists\", function () {\r",
+              "    pm.expect(html).to.include('class=\"username\"');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Subtitle exists\", function () {\r",
+              "    pm.expect(html).to.include('class=\"subtitle\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Subtitle text is correct\", function () {\r",
+              "    pm.expect(html).to.include(\"Аренда самокатов по всему городу\");\r",
+              "    pm.expect(html).to.include(\"Быстро, удобно, недорого\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.test(\"Button group exists\", function () {\r",
+              "    pm.expect(html).to.include('class=\"button-group\"');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.test(\"Map button exists\", function () {\r",
+              "    pm.expect(html).to.include(\"Открыть карту\");\r",
+              "    pm.expect(html).to.include(\"location.href='/map'\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Rentals button exists\", function () {\r",
+              "    pm.expect(html).to.include(\"Мои аренды\");\r",
+              "    pm.expect(html).to.include(\"location.href='/rentals/'\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Primary button class exists\", function () {\r",
+              "    pm.expect(html).to.include(\"btn btn-primary\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Secondary button class exists\", function () {\r",
+              "    pm.expect(html).to.include(\"btn btn-secondary\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              "\r",
+              "pm.test(\"Footer exists\", function () {\r",
+              "    pm.expect(html).to.include('class=\"footer\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Footer copyright correct\", function () {\r",
+              "    pm.expect(html).to.include(\"TheCheapskateScooters © 2024\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Page rendered correctly\", function () {\r",
+              "    pm.expect(html).to.include(\"TheCheapskateScooters\");\r",
+              "    pm.expect(html).to.include(\"button\");\r",
+              "    pm.expect(html.length).to.be.greaterThan(500);\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get map",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Content-Type is text/html\", () => {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\"))\r",
+              "        .to.include(\"text/html\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time < 1500ms\", () => {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+              "});\r",
+              "\r",
+              "const html = pm.response.text();\r",
+              "\r",
+              "pm.test(\"HTML is not empty\", () => {\r",
+              "    pm.expect(html.length).to.be.greaterThan(1000);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"DOCTYPE exists\", () => {\r",
+              "    pm.expect(html).to.include(\"<!DOCTYPE html>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"HTML lang ru\", () => {\r",
+              "    pm.expect(html).to.include('<html lang=\"ru\">');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Head and body exist\", () => {\r",
+              "    pm.expect(html).to.include(\"<head>\");\r",
+              "    pm.expect(html).to.include(\"<body>\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Charset UTF-8\", () => {\r",
+              "    pm.expect(html).to.include('<meta charset=\"UTF-8\">');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Viewport meta exists\", () => {\r",
+              "    pm.expect(html).to.include('name=\"viewport\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Title is correct\", () => {\r",
+              "    pm.expect(html).to.include(\"<title>Карта самокатов</title>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Styles are present\", () => {\r",
+              "    pm.expect(html).to.include(\"<style>\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Header exists\", () => {\r",
+              "    pm.expect(html).to.include(\"<header>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Header title exists\", () => {\r",
+              "    pm.expect(html).to.include(\"Карта самокатов TheCheapskateScooters\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Header subtitle exists\", () => {\r",
+              "    pm.expect(html).to.include(\"Выберите точку для просмотра самокатов\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Main container exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"container\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Map container exists\", () => {\r",
+              "    pm.expect(html).to.include('id=\"map\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Sidebar exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"sidebar\"');\r",
+              "    pm.expect(html).to.include('id=\"sidebar\"');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Points header exists\", () => {\r",
+              "    pm.expect(html).to.match(/Точки с самокатами\\s*\\(\\d+\\)/);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Point card exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"point-card\"');\r",
+              "    pm.expect(html).to.include('id=\"point-card-2\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Point card has data-id\", () => {\r",
+              "    pm.expect(html).to.include('data-id=\"2\"');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Point name exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"point-name\"');\r",
+              "    pm.expect(html).to.include(\"ITMO\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Point address placeholder exists\", () => {\r",
+              "    pm.expect(html).to.include('id=\"address-2\"');\r",
+              "    pm.expect(html).to.include(\"Загрузка адреса\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Scooter total count exists\", () => {\r",
+              "    pm.expect(html).to.include(\"🛴 Всего:\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Available scooters exists\", () => {\r",
+              "    pm.expect(html).to.include(\"✅ Доступно:\");\r",
+              "    pm.expect(html).to.include('id=\"available-2\"');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Details button exists\", () => {\r",
+              "    pm.expect(html).to.include(\"📋 Подробнее\");\r",
+              "    pm.expect(html).to.include(\"window.location.href='/points/2/'\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Select on map button exists\", () => {\r",
+              "    pm.expect(html).to.include(\"🗺️ На карте\");\r",
+              "    pm.expect(html).to.include(\"focusOnPoint(2)\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Selected indicator exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"selected-indicator\"');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Yandex Maps script included\", () => {\r",
+              "    pm.expect(html).to.include(\"api-maps.yandex.ru\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Points data exists\", () => {\r",
+              "    pm.expect(html).to.include(\"let points = JSON.parse\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Scooters data exists\", () => {\r",
+              "    pm.expect(html).to.include(\"let scooters = JSON.parse\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Map init function exists\", () => {\r",
+              "    pm.expect(html).to.include(\"function init()\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"focusOnPoint function exists\", () => {\r",
+              "    pm.expect(html).to.include(\"function focusOnPoint\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"select/deselect functions exist\", () => {\r",
+              "    pm.expect(html).to.include(\"function selectPoint\");\r",
+              "    pm.expect(html).to.include(\"function deselectPoint\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Map page rendered correctly\", () => {\r",
+              "    pm.expect(html).to.include(\"Карта самокатов\");\r",
+              "    pm.expect(html).to.include(\"point-card\");\r",
+              "    pm.expect(html).to.include(\"ymaps\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/map",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "map"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"CSRF token получен\", () => {\r",
+              "    pm.expect(pm.cookies.get('csrftoken')).to.exist;\r",
+              "    pm.environment.set(\"csrf_token\", pm.cookies.get('csrftoken'));\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/users/login/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "login",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post login",
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Успешный логин\", () => {\r",
+              "    pm.expect(pm.response.code).to.be.oneOf([200, 302]);\r",
+              "    pm.expect(pm.cookies.get('sessionid')).to.exist;\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "edgegrid"
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-CSRFToken",
+            "value": "{{csrf_token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "username",
+              "value": "TestUser",
+              "type": "text",
+              "uuid": "045cbddc-c5b8-4952-a8ba-9c87e2d877f0"
+            },
+            {
+              "key": "password",
+              "value": "testPassword",
+              "type": "text",
+              "uuid": "a393d7f3-0abd-443b-a2e9-b6f8d9650c19"
+            },
+            {
+              "key": "csrfmiddlewaretoken",
+              "value": "{{csrf_token}}",
+              "type": "text",
+              "uuid": "c7b4e3ca-e3c2-41da-ac28-efed57f89274"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{base_url}}/users/login/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "users",
+            "login",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get points",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Content-Type is text/html\", () => {\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\"))\r",
+              "        .to.include(\"text/html\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time < 1500ms\", () => {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1500);\r",
+              "});\r",
+              "\r",
+              "const html = pm.response.text();\r",
+              "\r",
+              "pm.test(\"HTML is not empty\", () => {\r",
+              "    pm.expect(html.length).to.be.greaterThan(1000);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"DOCTYPE exists\", () => {\r",
+              "    pm.expect(html).to.include(\"<!DOCTYPE html>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"HTML lang is ru\", () => {\r",
+              "    pm.expect(html).to.include('<html lang=\"ru\">');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Head and body exist\", () => {\r",
+              "    pm.expect(html).to.include(\"<head>\");\r",
+              "    pm.expect(html).to.include(\"<body>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"UTF-8 charset exists\", () => {\r",
+              "    pm.expect(html).to.include('<meta charset=\"UTF-8\">');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Viewport meta exists\", () => {\r",
+              "    pm.expect(html).to.include('name=\"viewport\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Title is correct\", () => {\r",
+              "    pm.expect(html).to.include(\"<title>ITMO - Выбор самоката</title>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Styles exist\", () => {\r",
+              "    pm.expect(html).to.include(\"<style>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Main container exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"container\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Header block exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"header\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Back to map link exists\", () => {\r",
+              "    pm.expect(html).to.include('href=\"/map\"');\r",
+              "    pm.expect(html).to.include(\"Назад к карте\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Point title exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"point-title\"');\r",
+              "    pm.expect(html).to.include(\"📍 ITMO\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Point info section exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"point-info\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Total scooters info exists\", () => {\r",
+              "    pm.expect(html).to.include(\"Всего самокатов\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Available scooters info exists\", () => {\r",
+              "    pm.expect(html).to.include(\"Доступно сейчас\");\r",
+              "    pm.expect(html).to.include(\"battery-good\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Scooters grid exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"scooters-grid\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Scooter card exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"scooter-card\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Scooter name exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"scooter-name\"');\r",
+              "    pm.expect(html).to.include(\"🛴\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Scooter is available\", () => {\r",
+              "    pm.expect(html).to.include(\"status-available\");\r",
+              "    pm.expect(html).to.include(\"Доступен\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Scooter details block exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"scooter-details\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Battery info exists\", () => {\r",
+              "    pm.expect(html).to.include(\"Батарея:\");\r",
+              "    pm.expect(html).to.include(\"🔋\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Rating exists\", () => {\r",
+              "    pm.expect(html).to.include(\"Рейтинг:\");\r",
+              "    pm.expect(html).to.include(\"⭐\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Scooter ID exists\", () => {\r",
+              "    pm.expect(html).to.match(/ID:\\s*<\\/span>\\s*<span class=\"detail-value\">#\\d+/);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Scooter description exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"description\"');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Rent button exists\", () => {\r",
+              "    pm.expect(html).to.include('class=\"rent-btn\"');\r",
+              "    pm.expect(html).to.include(\"Арендовать\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Rent button has onclick handler\", () => {\r",
+              "    pm.expect(html).to.match(/rentScooter\\(\\d+\\)/);\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"rentScooter function exists\", () => {\r",
+              "    pm.expect(html).to.include(\"function rentScooter\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Rent API endpoint exists\", () => {\r",
+              "    pm.expect(html).to.include(\"/api/rent/\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Auto reload exists (30s)\", () => {\r",
+              "    pm.expect(html).to.include(\"setTimeout\");\r",
+              "    pm.expect(html).to.include(\"30000\");\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Scooter page rendered correctly\", () => {\r",
+              "    pm.expect(html).to.include(\"Выбор самоката\");\r",
+              "    pm.expect(html).to.include(\"scooter-card\");\r",
+              "    pm.expect(html).to.include(\"Арендовать\");\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "auth": {
+          "type": "noauth"
+        },
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/points/2",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "points",
+            "2"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post rent",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Success\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "    pm.environment.set(\"rent\",pm.response.json().rental_id)\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-CSRFToken",
+            "value": "{{csrf_token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "url": {
+          "raw": "{{base_url}}/api/rent/2/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "rent",
+            "2",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Get rentals",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Content-Type is HTML\", function () {\r",
+              "    pm.response.to.have.header(\"Content-Type\");\r",
+              "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/html\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Has correct DOCTYPE\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.match(/^<!DOCTYPE html>/i);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"HTML lang is Russian\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('lang=\"ru\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Charset is UTF-8\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('charset=\"UTF-8\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Page title is correct\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include(\"<title>Мои аренды</title>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Header exists\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include(\"<header>\");\r",
+              "    pm.expect(body).to.include(\"</header>\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"H1 text is correct\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.match(/<h1>[\\s]*Мои аренды[\\s]*<\\/h1>/);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Back button exists\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('← Назад');\r",
+              "    pm.expect(body).to.include('window.history.back()');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Main sections present\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include(\"🚀 Текущие аренды\");\r",
+              "    pm.expect(body).to.include(\"📜 История аренд\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Container div exists\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('class=\"container\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Card elements present\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('class=\"card\"');\r",
+              "    pm.expect(body).to.include('class=\"card history\"');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cancel buttons exist for current rentals\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    const hasCancelButtons = body.includes('cancelRental(') && \r",
+              "                             body.includes('Отменить аренду');\r",
+              "    pm.expect(hasCancelButtons).to.be.true;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"JavaScript function cancelRental exists\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('function cancelRental');\r",
+              "    pm.expect(body).to.include('fetch');\r",
+              "    pm.expect(body).to.include('/api/de-rent/');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Dates have correct format\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    const hasDateFormats = body.match(/\\d{2}\\.\\d{2}\\.\\d{4}\\s\\d{2}:\\d{2}/g);\r",
+              "    pm.expect(hasDateFormats).to.not.be.null;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"CSS styles are included\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('<style>');\r",
+              "    pm.expect(body).to.include('font-family: Arial');\r",
+              "    pm.expect(body).to.include('background: #4c6ef5');\r",
+              "    pm.expect(body).to.include('border-radius:');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Cancel buttons have data attributes\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('data-rental-id');\r",
+              "    pm.expect(body).to.include('onclick=\"cancelRental(');\r",
+              "});\r",
+              "\r",
+              "\r",
+              "pm.test(\"Script tag exists\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    pm.expect(body).to.include('<script>');\r",
+              "    pm.expect(body).to.include('</script>');\r",
+              "    pm.expect(body).to.include('confirm(');\r",
+              "    pm.expect(body).to.include('alert(');\r",
+              "});\r",
+              "\r",
+              "pm.test(\"HTML is well-formed\", function () {\r",
+              "    const body = pm.response.text();\r",
+              "    const tags = [\r",
+              "        ['<html', '</html>'],\r",
+              "        ['<head>', '</head>'],\r",
+              "        ['<body>', '</body>'],\r",
+              "        ['<header>', '</header>'],\r",
+              "        ['<div class=\"container\">', '</div>']\r",
+              "    ];\r",
+              "    \r",
+              "    tags.forEach(([openTag, closeTag]) => {\r",
+              "        pm.expect(body).to.include(openTag);\r",
+              "        pm.expect(body).to.include(closeTag);\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Rental ID exists on page\", function () {\r",
+              "    const rentId = pm.environment.get(\"rent\");\r",
+              "    if (rentId) {\r",
+              "        pm.expect(pm.response.text()).to.include(rentId);\r",
+              "    }\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/rentals/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "rentals",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Post end rent",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Success\", () => {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "X-CSRFToken",
+            "value": "{{csrf_token}}",
+            "type": "text"
+          },
+          {
+            "key": "Content-Type",
+            "value": "application/x-www-form-urlencoded",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "urlencoded",
+          "urlencoded": []
+        },
+        "url": {
+          "raw": "{{base_url}}/api/de-rent/{{rent}}/",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "de-rent",
+            "{{rent}}",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}

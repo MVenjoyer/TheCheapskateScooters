@@ -19,7 +19,6 @@ def rent_scooter(request, scooter_id):
         id=scooter_id
     )
 
-    # Проверяем, нет ли активной аренды
     if Rental.objects.filter(scooter=scooter, end_time__isnull=True).exists():
         return JsonResponse({'success': False, 'message': 'Самокат уже арендован'})
 
@@ -44,29 +43,25 @@ def rent_scooter(request, scooter_id):
 @csrf_exempt
 @transaction.atomic
 def cancel_rental(request, rental_id):
-    """Отменяет активную аренду самоката"""
     if request.method != 'POST':
         return JsonResponse({'success': False, 'message': 'Неверный метод запроса'})
 
     try:
-        # Находим аренду с блокировкой для обновления
         rental = get_object_or_404(
             Rental.objects.select_for_update(),
             id=rental_id,
-            user=request.user,  # Только владелец аренды может отменить
-            end_time__isnull=True  # Только активные аренды
+            user=request.user,
+            end_time__isnull=True
         )
 
         scooter = rental.scooter
 
-        # Обновляем аренду
         rental.end_time = datetime.now()
         rental.end_latitude = request.POST.get('lat')
         rental.end_longitude = request.POST.get('lng')
-        rental.is_cancelled = True  # Если у вас есть такое поле
+        rental.is_cancelled = True
         rental.save()
 
-        # Освобождаем самокат
         scooter.is_available = True
         scooter.save(update_fields=['is_available'])
 
