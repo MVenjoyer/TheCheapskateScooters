@@ -12,6 +12,12 @@ Table auth_user as User {
   date_joined datetime [not null]
 }
 
+Table profile as Profile {
+  id integer [primary key]
+  phone varchar(20) [null]
+  user_id integer [ref: > auth_user.id, not null, unique]
+}
+
 Table scooter_points as ScooterPoint {
   id integer [primary key]
   name varchar(100) [not null]
@@ -27,12 +33,14 @@ Table scooters as Scooter {
   is_available boolean [default: true]
   battery_level integer [default: 100]
   created_at datetime [not null]
+  latitude float [null]
+  longitude float [null]
   point_id integer [ref: > scooter_points.id, null]
 }
 
 Table rentals as Rental {
   id integer [primary key]
-  user_id integer [ref: > auth_user.id, not null]
+  profile_id integer [ref: > profile.id, not null]
   scooter_id integer [ref: > scooters.id, not null]
   start_time datetime [null]
   end_time datetime [null]
@@ -41,5 +49,4 @@ Table rentals as Rental {
   end_latitude float [null]
   end_longitude float [null]
   total_price decimal(8, 2) [null]
-
 }

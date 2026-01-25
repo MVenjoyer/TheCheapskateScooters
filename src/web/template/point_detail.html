@@ -362,7 +362,7 @@
 
     <script>
         function rentScooter(scooterId) {
-            if (confirm('Вы хотите арендовать этот самокат?\n\nТестовый режим - 30 минут бесплатно.')) {
+            if (confirm('Вы хотите арендовать этот самокат?')) {
                 fetch(`/api/rent/${scooterId}/`, {
                     method: 'POST',
                 })

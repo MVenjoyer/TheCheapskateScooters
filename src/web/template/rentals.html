@@ -82,6 +82,8 @@
         <div class="card history">
             <strong>{{ rental.scooter.name }}</strong><br>
             {{ rental.start_time|date:"d.m.Y H:i" }} — {{ rental.end_time|date:"d.m.Y H:i" }}
+            <br>
+            <strong>Стоимость:</strong> {{ rental.total_price }} руб.
         </div>
         {% endfor %}
     {% else %}
@@ -97,25 +99,72 @@
             return;
         }
 
-        fetch(`/api/de-rent/${rentalId}/`, {
-            method: 'POST',
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Аренда успешно отменена!');
-                const rentalCard = document.querySelector(`[data-rental-id="${rentalId}"]`).closest('.card');
-                if (rentalCard) {
-                    rentalCard.remove();
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                function(position) {
+                    fetch(`/api/de-rent/${rentalId}/`, {
+                        method: 'POST',
+                        body: JSON.stringify({
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert(data.message);
+                            const rentalCard = document.querySelector(`[data-rental-id="${rentalId}"]`).closest('.card');
+                            if (rentalCard) {
+                                rentalCard.remove();
+                            }
+                        } else {
+                            alert('Ошибка: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Произошла ошибка при отмене аренды');
+                    });
+                },
+                function(error) {
+                    console.warn('Не удалось получить геолокацию:', error.message);
+
+                    fetch(`/api/de-rent/${rentalId}/`, {
+                        method: 'POST',
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Аренда отменена (без сохранения позиции)');
+                            const rentalCard = document.querySelector(`[data-rental-id="${rentalId}"]`).closest('.card');
+                            if (rentalCard) {
+                                rentalCard.remove();
+                            }
+                        } else {
+                            alert('Ошибка: ' + data.message);
+                        }
+                    });
                 }
-            } else {
-                alert('Ошибка: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Произошла ошибка при отмене аренды');
-        });
+            );
+        } else {
+            alert('Ваш браузер не поддерживает геолокацию. Позиция не будет сохранена.');
+
+            fetch(`/api/de-rent/${rentalId}/`, {
+                method: 'POST',
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Аренда отменена (без сохранения позиции)');
+                    const rentalCard = document.querySelector(`[data-rental-id="${rentalId}"]`).closest('.card');
+                    if (rentalCard) {
+                        rentalCard.remove();
+                    }
+                } else {
+                    alert('Ошибка: ' + data.message);
+                }
+            });
+        }
     }
 
 </script>

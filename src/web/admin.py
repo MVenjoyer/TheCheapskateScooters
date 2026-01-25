@@ -15,7 +15,7 @@ class ScooterPointAdmin(admin.ModelAdmin):
 
 @admin.register(Scooter)
 class ScooterAdmin(admin.ModelAdmin):
-    list_display = ('name', 'point', 'rating', 'battery_level', 'is_available')
+    list_display = ('name', 'point', 'rating', 'battery_level', 'is_available','latitude', 'longitude')
     list_filter = ('is_available', 'rating', 'point')
     search_fields = ('name', 'description')
 
@@ -23,6 +23,9 @@ class ScooterAdmin(admin.ModelAdmin):
     fieldsets = (
         ('Основная информация', {
             'fields': ('name', 'description', 'point')
+        }),
+        ('Координаты', {
+            'fields': ('latitude', 'longitude')
         }),
         ('Статус', {
             'fields': ('is_available', 'rating', 'battery_level')

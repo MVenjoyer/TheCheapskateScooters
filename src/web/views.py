@@ -97,13 +97,13 @@ def rentals_view(request):
 
 
     active_rentals = Rental.objects.filter(
-        user=user,
+        user=user.profile,
         end_time__isnull=True
     ).select_related('scooter')
 
 
     past_rentals = Rental.objects.filter(
-        user=user,
+        user=user.profile,
         end_time__isnull=False
     ).select_related('scooter').order_by('-end_time')
 

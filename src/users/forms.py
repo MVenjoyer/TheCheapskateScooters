@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.password_validation import validate_password
 
+
 class RegisterForm(forms.ModelForm):
     password1 = forms.CharField(
         label='Пароль',
@@ -11,6 +12,12 @@ class RegisterForm(forms.ModelForm):
     password2 = forms.CharField(
         label='Повторите пароль',
         widget=forms.PasswordInput
+    )
+    phone = forms.CharField(
+        max_length=20,
+        required=False,
+        label='Телефон',
+        help_text='Необязательно. Формат: +7 (999) 123-45-67'
     )
 
     class Meta:
@@ -31,6 +38,10 @@ class RegisterForm(forms.ModelForm):
     def save(self, commit=True):
         user = super().save(commit=False)
         user.set_password(self.cleaned_data['password1'])
+
         if commit:
             user.save()
+            user.profile.phone = self.cleaned_data.get('phone')
+            user.profile.save()
+
         return user
